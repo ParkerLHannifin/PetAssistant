@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "942194591937",
+    "project_id": "petassistant-638fb",
+    "storage_bucket": "petassistant-638fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942194591937:android:cdf0df569a30407ce7ac40",
+        "android_client_info": {
+          "package_name": "com.example.petassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "942194591937-o1h8oe51le47qfep7em0qnd0vhlss2nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBskVcPrdjqF8LNZTXyW4vUdjIQNRfbDYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "942194591937-o1h8oe51le47qfep7em0qnd0vhlss2nm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
