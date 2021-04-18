@@ -13,12 +13,14 @@ class ViewActivity : AppCompatActivity() {
         val list = findViewById<ListView>(R.id.list)
         val back = findViewById<Button>(R.id.back)
 
+        //FILL LIST WITH RECENT ACTIVITIES
+
         back.setOnClickListener {
             finish()
         }
 
         list.setOnClickListener {
-            //ALERT TO DELETE ENTRY
+            //DELETE ALERT
         }
     }
 }
