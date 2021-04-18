@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 lateinit var auth: FirebaseAuth
-
 class AddFeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
@@ -35,6 +34,7 @@ class AddFeedActivity : AppCompatActivity() {
                 food["foodTime"] = time.text.toString()
                 food["id"] = auth.currentUser.uid
                 food["type"] = "food"
+                food["name"] = "" //ADD PET NAME
                 db.collection("petInfo").add(food)
 
             } else {

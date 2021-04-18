@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddExActivity : AppCompatActivity() {
@@ -33,6 +34,7 @@ class AddExActivity : AppCompatActivity() {
                 ex["exTime"] = time.text.toString()
                 ex["id"] = auth.currentUser.uid
                 ex["type"] = "ex"
+                ex["name"] = "" //ADD PET NAME
                 db.collection("petInfo").add(ex)
 
             } else {

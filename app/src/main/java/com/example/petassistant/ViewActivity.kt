@@ -1,9 +1,11 @@
 package com.example.petassistant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ListView
+import androidx.appcompat.app.AlertDialog
 
 class ViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +22,16 @@ class ViewActivity : AppCompatActivity() {
         }
 
         list.setOnClickListener {
-            //DELETE ALERT
+            AlertDialog.Builder(this)
+                    .setTitle("Remove Pet")
+                    .setMessage("Are you sure you want remove this item?")
+                    .setPositiveButton("Yes") { _, _ ->
+
+                        //REMOVE ITEM FROM DATABASE
+
+                        startActivity(Intent(this, ViewActivity::class.java))
+                    }
+                    .setNegativeButton("Cancel", null).show()
         }
     }
 }

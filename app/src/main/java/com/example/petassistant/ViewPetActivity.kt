@@ -22,6 +22,8 @@ class ViewPetActivity : AppCompatActivity() {
         val addFeed = findViewById<Button>(R.id.addFeedButton)
         val view = findViewById<Button>(R.id.viewButton)
 
+        //GET PET INFORMATION FROM DATABASE
+
         //CHANGE PET PICTURE
 
         remove.setOnClickListener {

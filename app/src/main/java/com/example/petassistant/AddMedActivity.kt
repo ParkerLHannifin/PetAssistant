@@ -33,6 +33,7 @@ class AddMedActivity : AppCompatActivity() {
                 med["medTime"] = time.text.toString()
                 med["id"] = auth.currentUser.uid
                 med["type"] = "med"
+                med["name"] = "" //ADD PET NAME
                 db.collection("petInfo").add(med)
 
             } else {
