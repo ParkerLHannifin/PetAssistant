@@ -23,6 +23,7 @@ class ViewAllActivity : AppCompatActivity() {
         val list = findViewById<ListView>(R.id.list)
         val elements = ArrayList<String>()
         val db = FirebaseFirestore.getInstance()
+        var array = arrayOf("")
 
         db.collection("ex").get().addOnSuccessListener { docs ->
             for (i in docs) {
@@ -44,8 +45,9 @@ class ViewAllActivity : AppCompatActivity() {
                             elements.add("" + i.data["medDate"] + ", " + i.data["medTime"] + ", " + i.data["medName"] + ", " + i.data["medDose"])
                         }
                     }
-
+                    
                     list.adapter = MyAdapter(elements, this)
+                    array = elements.toTypedArray()
                 }
             }
         }
@@ -59,21 +61,21 @@ class ViewAllActivity : AppCompatActivity() {
 
                     db.collection("ex").get().addOnSuccessListener { docs ->
                         for (i in docs) {
-                            if (elements[position] == "" + i.data["exType"] + ", " + i.data["exDuration"] + ", " + i.data["exDate"] + ", " + i.data["exTime"]) {
+                            if (array[position] == "" + i.data["exDate"] + ", " + i.data["exTime"] + ", " + i.data["exType"] + ", " + i.data["exDuration"] + " minutes") {
                                 db.collection("ex").document(i.id).delete()
                             }
                         }
                     }
                     db.collection("food").get().addOnSuccessListener { docs ->
                         for (i in docs) {
-                            if (elements[position] == "" + i.data["foodType"] + ", " + i.data["foodDate"] + ", " + i.data["foodTime"]) {
+                            if (array[position] == "" + i.data["foodDate"] + ", " + i.data["foodTime"] + ", " + i.data["foodType"]) {
                                 db.collection("food").document(i.id).delete()
                             }
                         }
                     }
                     db.collection("med").get().addOnSuccessListener { docs ->
                         for (i in docs) {
-                            if (elements[position] == "" + i.data["medName"] + ", " + i.data["medDose"] + ", " + i.data["medDate"] + ", " + i.data["medTime"]) {
+                            if (array[position] == "" + i.data["medDate"] + ", " + i.data["medTime"] + ", " + i.data["medName"] + ", " + i.data["medDose"]) {
                                 db.collection("med").document(i.id).delete()
                             }
                         }
