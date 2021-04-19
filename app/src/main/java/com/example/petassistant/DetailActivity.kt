@@ -30,15 +30,15 @@ class DetailActivity : AppCompatActivity() {
         val addFdBtn = findViewById<Button>(R.id.add_feeding)
 
         addExBtn.setOnClickListener {
-            //go to add exercise...
+            startActivity(Intent(this, AddExActivity::class.java))
         }
 
         addMdBtn.setOnClickListener {
-            //go to add medical...
+            startActivity(Intent(this, AddMedActivity::class.java))
         }
 
         addFdBtn.setOnClickListener {
-            //go to add feeding
+            startActivity(Intent(this, AddFeedActivity::class.java))
         }
 
         val bundle: Bundle? = intent.extras
