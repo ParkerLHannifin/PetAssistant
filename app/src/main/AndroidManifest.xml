@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetAssistant">
+        <activity android:name=".ViewActivity"></activity>
+        <activity android:name=".AddFeedActivity" />
+        <activity android:name=".AddExActivity" />
+        <activity android:name=".AddMedActivity" />
+        <activity android:name=".ViewPetActivity" />
         <activity android:name=".SignUpActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -17,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".SignUpActivity" />
     </application>
 
 </manifest>
