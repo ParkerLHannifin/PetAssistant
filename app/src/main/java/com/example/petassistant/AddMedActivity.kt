@@ -26,14 +26,14 @@ class AddMedActivity : AppCompatActivity() {
         add.setOnClickListener {
             if(enterName.text.toString().trim() != "" && enterDose.text.toString().trim() == "" && date.text.toString().trim() != "" && time.text.toString().trim() != "") {
                 val db = FirebaseFirestore.getInstance()
-                val med: MutableMap<String, Any> = HashMap()
+                val med: MutableMap<String, Any?> = HashMap()
                 med["medName"] = enterName.text.toString()
                 med["medDose"] = enterDose.text.toString()
                 med["medDate"] = date.text.toString()
                 med["medTime"] = time.text.toString()
-                med["id"] = auth.currentUser.uid
+                med["id"] = auth.currentUser!!.uid
                 med["type"] = "med"
-                med["name"] = "" //ADD PET NAME
+                med["name"] = intent.getStringExtra("name")
                 db.collection("petInfo").add(med)
 
             } else {

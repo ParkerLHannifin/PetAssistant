@@ -27,15 +27,16 @@ class AddExActivity : AppCompatActivity() {
         add.setOnClickListener {
             if(type.text.toString().trim() != "" && duration.text.toString().trim() != "" && time.text.toString().trim() != "") {
                 val db = FirebaseFirestore.getInstance()
-                val ex: MutableMap<String, Any> = HashMap()
+                val user = FirebaseAuth.getInstance().currentUser!!
+                val ex: MutableMap<String, Any?> = HashMap()
                 ex["exType"] = type.text.toString()
                 ex["exDuration"] = duration.text.toString()
                 ex["exDate"] = date.text.toString()
                 ex["exTime"] = time.text.toString()
-                ex["id"] = auth.currentUser.uid
+                ex["id"] = auth.currentUser!!.uid
                 ex["type"] = "ex"
-                ex["name"] = "" //ADD PET NAME
-                db.collection("petInfo").add(ex)
+                ex["name"] = intent.getStringExtra("name")
+                db.collection(user.uid).add(ex)
 
             } else {
                 Toast.makeText(this, "Fill in all the boxes!", Toast.LENGTH_SHORT).show()

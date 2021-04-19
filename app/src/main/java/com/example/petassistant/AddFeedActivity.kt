@@ -28,13 +28,13 @@ class AddFeedActivity : AppCompatActivity() {
         add.setOnClickListener {
             if(type.text.toString().trim() != "" && date.text.toString().trim() != "" && time.text.toString().trim() != "") {
                 val db = FirebaseFirestore.getInstance()
-                val food: MutableMap<String, Any> = HashMap()
+                val food: MutableMap<String, Any?> = HashMap()
                 food["foodType"] = type.text.toString()
                 food["foodDate"] = date.text.toString()
                 food["foodTime"] = time.text.toString()
-                food["id"] = auth.currentUser.uid
+                food["id"] = auth.currentUser!!.uid
                 food["type"] = "food"
-                food["name"] = "" //ADD PET NAME
+                food["name"] = intent.getStringExtra("name")
                 db.collection("petInfo").add(food)
 
             } else {

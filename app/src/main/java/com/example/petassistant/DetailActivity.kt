@@ -30,15 +30,21 @@ class DetailActivity : AppCompatActivity() {
         val addFdBtn = findViewById<Button>(R.id.add_feeding)
 
         addExBtn.setOnClickListener {
-            startActivity(Intent(this, AddExActivity::class.java))
+            val intent = Intent(this, AddExActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
         }
 
         addMdBtn.setOnClickListener {
-            startActivity(Intent(this, AddMedActivity::class.java))
+            val intent = Intent(this, AddMedActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
         }
 
         addFdBtn.setOnClickListener {
-            startActivity(Intent(this, AddFeedActivity::class.java))
+            val intent = Intent(this, AddFeedActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
         }
 
         val bundle: Bundle? = intent.extras
