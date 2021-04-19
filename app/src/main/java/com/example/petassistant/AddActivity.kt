@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -34,6 +35,7 @@ class AddActivity : AppCompatActivity() {
 
     private fun addPet() {
         val resultIntent = Intent()
+        val user = FirebaseAuth.getInstance().currentUser!!
 
         if (nameInput.text.isNullOrEmpty() || typeInput.text.isNullOrEmpty()) {
             Toast.makeText(this, "Input cannot be empty", Toast.LENGTH_SHORT).show()
@@ -44,27 +46,20 @@ class AddActivity : AppCompatActivity() {
             val type = typeInput.text.toString()
             val newPet = Pet(id = id, name = name, type = type)
 
-//            replace with specific userID when login page is available
-            db.collection("yong")
-                    .add(newPet)
-                    .addOnSuccessListener {
-                        Log.d("aaa", "添加成功")
-                        resultIntent.putExtra("id", id)
-                        resultIntent.putExtra("name", name)
-                        resultIntent.putExtra("type", type)
-                        setResult(Activity.RESULT_OK, resultIntent)
-                        finish()
-                    }
-                    .addOnFailureListener {
-                        Log.d("aaa", "添加失败")
-                        finish()
-                        Toast.makeText(this, "Failed to save pet", Toast.LENGTH_SHORT).show()
-                    }
-//            resultIntent.putExtra("id", id)
-//            resultIntent.putExtra("name", name)
-//            resultIntent.putExtra("type", type)
-//            setResult(Activity.RESULT_OK, resultIntent)
-//            finish()
+            db.collection(user.uid)
+                .add(newPet)
+                .addOnSuccessListener {
+                    resultIntent.putExtra("id", id)
+                    resultIntent.putExtra("name", name)
+                    resultIntent.putExtra("type", type)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+                }
+                .addOnFailureListener {
+                    Log.d("aaa", "添加失败")
+                    finish()
+                    Toast.makeText(this, "Failed to save pet", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 }

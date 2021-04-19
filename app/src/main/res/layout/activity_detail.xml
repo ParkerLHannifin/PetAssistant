@@ -10,7 +10,7 @@
         android:id="@+id/detail_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-
+        android:contentDescription="Pet icon"
         android:src="@drawable/ic_baseline_pets_24"
         app:layout_constraintBottom_toTopOf="@+id/detail_pet_name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,25 +22,25 @@
         android:id="@+id/detail_pet_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pet Name"
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/detail_pet_type"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_icon"
+        tools:text="Pet Name" />
 
     <TextView
         android:id="@+id/detail_pet_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/add_medical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detail_pet_name" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_pet_name"
+        tools:text="Pet type" />
 
     <Button
         android:id="@+id/add_medical"
