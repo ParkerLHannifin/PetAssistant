@@ -13,9 +13,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DetailActivity : AppCompatActivity() {
-    val db = FirebaseFirestore.getInstance()
-    val user = FirebaseAuth.getInstance().currentUser!!
-    var petID: String? = null
+    private val db = FirebaseFirestore.getInstance()
+    private val user = FirebaseAuth.getInstance().currentUser!!
+    private var petID: String? = null
     var name = "???"
     var type = "???"
 
@@ -28,24 +28,7 @@ class DetailActivity : AppCompatActivity() {
         val addExBtn = findViewById<Button>(R.id.add_exercise)
         val addMdBtn = findViewById<Button>(R.id.add_medical)
         val addFdBtn = findViewById<Button>(R.id.add_feeding)
-
-        addExBtn.setOnClickListener {
-            val intent = Intent(this, AddExActivity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
-        }
-
-        addMdBtn.setOnClickListener {
-            val intent = Intent(this, AddMedActivity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
-        }
-
-        addFdBtn.setOnClickListener {
-            val intent = Intent(this, AddFeedActivity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
-        }
+        val viewAll = findViewById<Button>(R.id.viewAll)
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
@@ -67,9 +50,33 @@ class DetailActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "Pet does not exist", Toast.LENGTH_SHORT).show()
                     }
-                }.addOnFailureListener { exception ->
+                }.addOnFailureListener {
                     Toast.makeText(this, "Failed to get pet", Toast.LENGTH_SHORT).show()
                 }
+        }
+
+        viewAll.setOnClickListener {
+            val intent = Intent(this, ViewAllActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        }
+
+        addExBtn.setOnClickListener {
+            val intent = Intent(this, AddExActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        }
+
+        addMdBtn.setOnClickListener {
+            val intent = Intent(this, AddMedActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        }
+
+        addFdBtn.setOnClickListener {
+            val intent = Intent(this, AddFeedActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
         }
     }
 
@@ -84,7 +91,7 @@ class DetailActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Notice")
                 builder.setMessage("Are you sure to delete the pet?")
-                builder.setPositiveButton("Yes") { dialog, which ->
+                builder.setPositiveButton("Yes") { _, _ ->
                     petID?.let {
                         db.collection(user.uid).document(it)
                             .delete()
@@ -99,7 +106,7 @@ class DetailActivity : AppCompatActivity() {
                                 ).show()
                                 finish()
                             }
-                            .addOnFailureListener { e ->
+                            .addOnFailureListener {
                                 Toast.makeText(this, "Failed to delete the pet", Toast.LENGTH_SHORT)
                                     .show()
                             }

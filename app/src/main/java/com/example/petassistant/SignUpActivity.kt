@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
+@Suppress("CascadeIf")
 class SignUpActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,10 +16,10 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         auth = FirebaseAuth.getInstance()
-        var emailTF = findViewById<EditText>(R.id.signUpEmail)
-        var pwdTF = findViewById<EditText>(R.id.signUpPwd)
-        var confirmPwd = findViewById<EditText>(R.id.confirmPwd)
-        var signUpBtn = findViewById<Button>(R.id.signUpBtn)
+        val emailTF = findViewById<EditText>(R.id.signUpEmail)
+        val pwdTF = findViewById<EditText>(R.id.signUpPwd)
+        val confirmPwd = findViewById<EditText>(R.id.confirmPwd)
+        val signUpBtn = findViewById<Button>(R.id.signUpBtn)
         var pwdUpper = false
         var pwdLower = false
         var pwdNumber = false
@@ -26,8 +27,8 @@ class SignUpActivity : AppCompatActivity() {
 
         signUpBtn.setOnClickListener {
             var pwdLength = 0
-            var emailMatch = android.util.Patterns.EMAIL_ADDRESS.matcher(emailTF.text).matches()
-            var pwdMatch = pwdTF.text.toString() == confirmPwd.text.toString()
+            val emailMatch = android.util.Patterns.EMAIL_ADDRESS.matcher(emailTF.text).matches()
+            val pwdMatch = pwdTF.text.toString() == confirmPwd.text.toString()
             if (emailMatch && pwdMatch) {
                 for (letter in pwdTF.text.toString()) {
                     pwdLength++
@@ -48,7 +49,7 @@ class SignUpActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "user created", Toast.LENGTH_SHORT).show()
-                                startActivity(Intent(this, MainActivity::class.java))
+                                startActivity(Intent(this, HomeActivity::class.java))
                             }
                         }
                 } else {
