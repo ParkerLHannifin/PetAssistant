@@ -1,6 +1,7 @@
 package com.example.petassistant
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
@@ -19,34 +20,35 @@ class ViewAllActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_all)
 
         val back = findViewById<Button>(R.id.viewAllBack)
-        val list = findViewById<ListView>(R.id.viewAllList)
+        val list = findViewById<ListView>(R.id.list)
         val elements = ArrayList<String>()
-
         val db = FirebaseFirestore.getInstance()
-        db.collection("ex").get().addOnSuccessListener { docs ->
-            for(i in docs) {
-                if(i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
-                    elements.add("" + i.data["exType"] + ", " + i.data["exDuration"] + ", " + i.data["exDate"] + ", " + i.data["exTime"])
-                }
-            }
-        }
-        db.collection("food").get().addOnSuccessListener { docs ->
-            for(i in docs) {
-                if(i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
-                    elements.add("" + i.data["foodType"] + ", " + i.data["foodDate"] + ", " + i.data["foodTime"])
-                }
-            }
-        }
-        db.collection("med").get().addOnSuccessListener { docs ->
-            for(i in docs) {
-                if(i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
-                    elements.add("" + i.data["medName"] + ", " + i.data["medDose"] + ", " + i.data["medDate"] + ", " + i.data["medTime"])
-                }
-            }
-        }
 
-        val listAdapter: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, elements)
-        list.adapter = MyAdapter(elements, this)
+        db.collection("ex").get().addOnSuccessListener { docs ->
+            for (i in docs) {
+                if (i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
+                    elements.add("" + i.data["exDate"] + ", " + i.data["exTime"] + ", " + i.data["exType"] + ", " + i.data["exDuration"] + " minutes")
+                }
+            }
+
+            db.collection("food").get().addOnSuccessListener { docs ->
+                for (i in docs) {
+                    if (i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
+                        elements.add("" + i.data["foodDate"] + ", " + i.data["foodTime"] + ", " + i.data["foodType"])
+                    }
+                }
+
+                db.collection("med").get().addOnSuccessListener { docs ->
+                    for (i in docs) {
+                        if (i.data["name"] == intent.getStringExtra("name") && i.data["id"] == auth.currentUser!!.uid) {
+                            elements.add("" + i.data["medDate"] + ", " + i.data["medTime"] + ", " + i.data["medName"] + ", " + i.data["medDose"])
+                        }
+                    }
+
+                    list.adapter = MyAdapter(elements, this)
+                }
+            }
+        }
 
         list.setOnItemClickListener { _, _, position, _ ->
 
@@ -56,29 +58,28 @@ class ViewAllActivity : AppCompatActivity() {
                 .setPositiveButton("Yes") { _, _ ->
 
                     db.collection("ex").get().addOnSuccessListener { docs ->
-                        for(i in docs) {
-                            if(elements[position] == "" + i.data["exType"] + ", " + i.data["exDuration"] + ", " + i.data["exDate"] + ", " + i.data["exTime"]) {
+                        for (i in docs) {
+                            if (elements[position] == "" + i.data["exType"] + ", " + i.data["exDuration"] + ", " + i.data["exDate"] + ", " + i.data["exTime"]) {
                                 db.collection("ex").document(i.id).delete()
                             }
                         }
                     }
                     db.collection("food").get().addOnSuccessListener { docs ->
-                        for(i in docs) {
-                            if(elements[position] == "" + i.data["foodType"] + ", " + i.data["foodDate"] + ", " + i.data["foodTime"]) {
+                        for (i in docs) {
+                            if (elements[position] == "" + i.data["foodType"] + ", " + i.data["foodDate"] + ", " + i.data["foodTime"]) {
                                 db.collection("food").document(i.id).delete()
                             }
                         }
                     }
                     db.collection("med").get().addOnSuccessListener { docs ->
-                        for(i in docs) {
-                            if(elements[position] == "" + i.data["medName"] + ", " + i.data["medDose"] + ", " + i.data["medDate"] + ", " + i.data["medTime"]) {
+                        for (i in docs) {
+                            if (elements[position] == "" + i.data["medName"] + ", " + i.data["medDose"] + ", " + i.data["medDate"] + ", " + i.data["medTime"]) {
                                 db.collection("med").document(i.id).delete()
                             }
                         }
                     }
 
-                    elements.removeAt(position)
-                    listAdapter.notifyDataSetChanged()
+                    finish()
                 }
                 .setNegativeButton("Cancel", null).show()
         }
@@ -88,7 +89,7 @@ class ViewAllActivity : AppCompatActivity() {
         }
     }
 
-    class MyAdapter(private var data : ArrayList<String>, var context: Context): BaseAdapter() {
+    class MyAdapter(private var data: ArrayList<String>, var context: Context) : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val tv = TextView(context)
             tv.text = data[position]
