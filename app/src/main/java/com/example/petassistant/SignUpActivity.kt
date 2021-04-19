@@ -42,7 +42,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
                 }
 
-                if(pwdUpper == true && pwdLower == true && pwdNumber == true && pwdLength >= 12){
+                if(pwdUpper == true && pwdLower == true && pwdNumber == true && pwdLength >= 8){
                     auth.createUserWithEmailAndPassword(
                         emailTF.text.toString(),
                         pwdTF.text.toString()
@@ -51,7 +51,6 @@ class SignUpActivity : AppCompatActivity() {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "user created", Toast.LENGTH_SHORT).show()
                                 startActivity(Intent(this, MainActivity::class.java))
-
                             }
                         }
                 }

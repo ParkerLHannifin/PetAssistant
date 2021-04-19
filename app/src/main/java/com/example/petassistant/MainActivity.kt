@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT)
                                         .show()
-                                // Start carrigan's activity
+                                startActivity(Intent(this, ViewPetActivity::class.java))
                             } else {
                                 Toast.makeText(this, "Invalid Email/Password", Toast.LENGTH_SHORT)
                                         .show()
