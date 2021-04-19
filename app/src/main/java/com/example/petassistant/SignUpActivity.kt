@@ -24,42 +24,40 @@ class SignUpActivity : AppCompatActivity() {
         var pwdNumber = false
 
 
-        signUpBtn.setOnClickListener(){
+        signUpBtn.setOnClickListener {
             var pwdLength = 0
             var emailMatch = android.util.Patterns.EMAIL_ADDRESS.matcher(emailTF.text).matches()
-            var pwdMatch = pwdTF.text.toString().equals(confirmPwd.text.toString())
-            if(emailMatch && pwdMatch){
-                for (letter in pwdTF.text.toString()){
+            var pwdMatch = pwdTF.text.toString() == confirmPwd.text.toString()
+            if (emailMatch && pwdMatch) {
+                for (letter in pwdTF.text.toString()) {
                     pwdLength++
-                    if(letter.isUpperCase()){
+                    if (letter.isUpperCase()) {
                         pwdUpper = true
-                    }
-                    else if(letter.isLowerCase()){
+                    } else if (letter.isLowerCase()) {
                         pwdLower = true
-                    }
-                    else if(letter.isDigit()){
+                    } else if (letter.isDigit()) {
                         pwdNumber = true
                     }
                 }
 
-                if(pwdUpper == true && pwdLower == true && pwdNumber == true && pwdLength >= 8){
+                if (pwdUpper && pwdLower && pwdNumber && pwdLength >= 12) {
                     auth.createUserWithEmailAndPassword(
                         emailTF.text.toString(),
                         pwdTF.text.toString()
                     )
-                        .addOnCompleteListener() {
+                        .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 Toast.makeText(this, "user created", Toast.LENGTH_SHORT).show()
                                 startActivity(Intent(this, MainActivity::class.java))
                             }
                         }
+                } else {
+                    Toast.makeText(this, "Password does not meet requirements", Toast.LENGTH_SHORT)
+                        .show()
                 }
-                else{
-                    Toast.makeText(this, "Password does not meet requirements", Toast.LENGTH_SHORT).show()
-                }
-            } else if(!emailMatch){
+            } else if (!emailMatch) {
                 Toast.makeText(this, "Invalid email", Toast.LENGTH_SHORT).show()
-            } else if(!pwdMatch){
+            } else if (!pwdMatch) {
                 Toast.makeText(this, "Password do not match", Toast.LENGTH_SHORT).show()
             }
         }

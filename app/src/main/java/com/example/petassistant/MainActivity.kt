@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-    lateinit var auth : FirebaseAuth
+    lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -21,27 +21,26 @@ class MainActivity : AppCompatActivity() {
         var emailTF = findViewById<EditText>(R.id.signInEmail)
         var pwdTF = findViewById<EditText>(R.id.signInPwd)
 
-        signUpBtnHome.setOnClickListener(){
+        signUpBtnHome.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
-        logInBtn.setOnClickListener(){
-            if(emailTF.text.toString() == "" || pwdTF.text.toString() == ""){
+        logInBtn.setOnClickListener {
+            if (emailTF.text.toString() == "" || pwdTF.text.toString() == "") {
                 Toast.makeText(this, "Invalid Email/Password", Toast.LENGTH_SHORT)
-                        .show()
-            }
-            else {
+                    .show()
+            } else {
                 auth.signInWithEmailAndPassword(emailTF.text.toString(), pwdTF.text.toString())
-                        .addOnCompleteListener() {
-                            if (it.isSuccessful) {
-                                Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT)
-                                        .show()
-                                startActivity(Intent(this, ViewPetActivity::class.java))
-                            } else {
-                                Toast.makeText(this, "Invalid Email/Password", Toast.LENGTH_SHORT)
-                                        .show()
-                            }
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT)
+                                .show()
+                            startActivity(Intent(this, HomeActivity::class.java))
+                        } else {
+                            Toast.makeText(this, "Invalid Email/Password", Toast.LENGTH_SHORT)
+                                .show()
                         }
+                    }
             }
 
         }
