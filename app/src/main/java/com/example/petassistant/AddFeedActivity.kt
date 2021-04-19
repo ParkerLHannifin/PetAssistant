@@ -8,8 +8,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-lateinit var auth: FirebaseAuth
 class AddFeedActivity : AppCompatActivity() {
+    lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
@@ -29,13 +29,15 @@ class AddFeedActivity : AppCompatActivity() {
             if(type.text.toString().trim() != "" && date.text.toString().trim() != "" && time.text.toString().trim() != "") {
                 val db = FirebaseFirestore.getInstance()
                 val food: MutableMap<String, Any?> = HashMap()
-                food["foodType"] = type.text.toString()
-                food["foodDate"] = date.text.toString()
-                food["foodTime"] = time.text.toString()
-                food["id"] = auth.currentUser!!.uid
-                food["type"] = "food"
-                food["name"] = intent.getStringExtra("name")
-                db.collection("petInfo").add(food)
+                    food["foodType"] = type.text.toString()
+                    food["foodDate"] = date.text.toString()
+                    food["foodTime"] = time.text.toString()
+                    food["id"] = auth.currentUser!!.uid
+                    food["name"] = intent.getStringExtra("name")
+                db.collection("food").add(food)
+
+                Toast.makeText(this, "Food recorded!", Toast.LENGTH_SHORT).show()
+                finish()
 
             } else {
                 Toast.makeText(this, "Fill in all the boxes!", Toast.LENGTH_SHORT).show()

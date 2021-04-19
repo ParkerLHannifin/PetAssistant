@@ -9,7 +9,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AddExActivity : AppCompatActivity() {
+    lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        auth = FirebaseAuth.getInstance()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_ex)
 
@@ -25,18 +27,19 @@ class AddExActivity : AppCompatActivity() {
         }
 
         add.setOnClickListener {
-            if(type.text.toString().trim() != "" && duration.text.toString().trim() != "" && time.text.toString().trim() != "") {
+            if(type.text.toString().trim() != "" && duration.text.toString().trim() != "" && date.text.toString().trim() != "" && time.text.toString().trim() != "") {
                 val db = FirebaseFirestore.getInstance()
-                val user = FirebaseAuth.getInstance().currentUser!!
                 val ex: MutableMap<String, Any?> = HashMap()
-                ex["exType"] = type.text.toString()
-                ex["exDuration"] = duration.text.toString()
-                ex["exDate"] = date.text.toString()
-                ex["exTime"] = time.text.toString()
-                ex["id"] = auth.currentUser!!.uid
-                ex["type"] = "ex"
-                ex["name"] = intent.getStringExtra("name")
-                db.collection(user.uid).add(ex)
+                    ex["exType"] = type.text.toString()
+                    ex["exDuration"] = duration.text.toString()
+                    ex["exDate"] = date.text.toString()
+                    ex["exTime"] = time.text.toString()
+                    ex["id"] = auth.currentUser!!.uid
+                    ex["name"] = intent.getStringExtra("name")
+                db.collection("ex").add(ex)
+
+                Toast.makeText(this, "Exercise recorded!", Toast.LENGTH_SHORT).show()
+                finish()
 
             } else {
                 Toast.makeText(this, "Fill in all the boxes!", Toast.LENGTH_SHORT).show()
